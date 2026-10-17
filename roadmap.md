@@ -1,0 +1,2 @@
+- [x] Build the FORTÉ one-page marketing site to the uploaded brief.
+- [x] Complete responsive and contact-flow verification.
