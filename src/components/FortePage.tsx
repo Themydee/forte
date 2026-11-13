@@ -7,6 +7,7 @@ import dinnerImage from "@/assets/forte-dinner.jpg";
 import activationImage from "@/assets/forte-activation.jpg";
 import welcomeImage from "@/assets/forte-welcome.jpg";
 import awardsImage from "@/assets/forte-awards.jpg";
+import ribbonImage from "@/assets/forte-gold-ribbon.jpg";
 
 function toSrc(img: unknown): string {
   if (typeof img === "object" && img !== null && "src" in img) {
@@ -144,7 +145,7 @@ function SiteNavigation() {
               {section.label}
             </a>
           ))}
-          <Button variant="gold" size="sm" className="header-cta" asChild>
+          <Button variant="purple" size="sm" className="header-cta" asChild>
             <a href="#contact">
               Send Us Your Brief <ArrowRight aria-hidden="true" />
             </a>
@@ -170,7 +171,7 @@ function SiteNavigation() {
               {section.label}
             </a>
           ))}
-          <Button variant="gold" className="mobile-cta" asChild>
+          <Button variant="purple" className="mobile-cta" asChild>
             <a href="#contact" onClick={closeMenu}>
               Send Us Your Brief <ArrowRight aria-hidden="true" />
             </a>
@@ -342,7 +343,7 @@ function ContactForm() {
           placeholder="A little about what you’re planning, who it’s for and what matters most."
         />
       </div>
-      <Button variant="gold" className="send-button" type="submit" disabled={sending}>
+      <Button variant="purple" className="send-button" type="submit" disabled={sending}>
         {sending ? "Preparing your brief…" : "Send Brief"} <ArrowRight aria-hidden="true" />
       </Button>
       {status && (
@@ -508,38 +509,55 @@ export default function FortePage() {
     <>
       <SiteNavigation />
       <main>
-        <section
-          className="hero"
-          id="top"
-          aria-labelledby="hero-title"
-          style={{
-            backgroundImage: `linear-gradient(to bottom, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.94) 60%, #ffffff 100%), url(${toSrc(heroImage)})`,
-          }}
-        >
-          <div className="hero-inner">
-            <p className="eyebrow">Corporate Events &amp; Experiences</p>
-            <h1 id="hero-title">
-              Give us
-              <br />
-              the brief.
-            </h1>
-            <p className="hero-copy">
-              Corporate events and experiences, planned with purpose and delivered without a hitch.
-            </p>
-            <Button variant="gold" className="hero-link" asChild>
-              <a href="#contact">
-                Send Us Your Brief <ArrowRight aria-hidden="true" />
-              </a>
-            </Button>
+        <section className="hero" id="top" aria-labelledby="hero-title">
+          <div className="hero-split">
+            <div className="hero-inner">
+              <p className="eyebrow">Corporate Events &amp; Experiences</p>
+              <h1 id="hero-title">
+                Give us
+                <br />
+                the brief.
+              </h1>
+              <p className="hero-copy">
+                Corporate events and experiences, planned with purpose and delivered without a hitch.
+              </p>
+              <div className="hero-actions">
+                <Button variant="purple" className="hero-link" asChild>
+                  <a href="#contact">
+                    Send Us Your Brief <ArrowRight aria-hidden="true" />
+                  </a>
+                </Button>
+                <a className="hero-secondary-link" href="#about">
+                  Discover FORTÉ <ArrowDown aria-hidden="true" size={14} />
+                </a>
+              </div>
+            </div>
+
+            <div className="hero-frame">
+              <div className="hero-frame-media">
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  poster={toSrc(heroImage)}
+                  aria-hidden="true"
+                >
+                  <source src="/videos/forte-hero-event.webm" type="video/webm" />
+                </video>
+                <div className="hero-frame-tint" />
+              </div>
+              <span className="hero-pill">Exceptional, by Design.</span>
+            </div>
           </div>
           <a className="scroll-cue" href="#about" aria-label="Scroll to about FORTÉ">
             Discover FORTÉ
           </a>
         </section>
 
-        <section className="section" id="about" aria-labelledby="about-title">
+        <section className="section section-champagne" id="about" aria-labelledby="about-title">
           <div className="section-inner about-grid">
-            <div className="reveal">
+            <div className="reveal about-image-frame">
               <img
                 className="about-image"
                 src={toSrc(welcomeImage)}
@@ -554,11 +572,15 @@ export default function FortePage() {
               <h2 className="section-title" id="about-title">
                 Corporate experiences with purpose.
               </h2>
+              <div className="statement-box">
+                <p>
+                  FORTÉ turns an organisation’s brief into a polished, purposeful and memorable
+                  experience.
+                </p>
+              </div>
               <p className="section-lead">
-                FORTÉ turns an organisation’s brief into a polished, purposeful and memorable
-                experience. We start by understanding why your people are coming together, then
-                shape the concept, production, guest journey and event-day delivery around that
-                purpose.
+                We start by understanding why your people gather, then shape the concept,
+                production and guest journey around that purpose.
               </p>
               <p className="discipline-line">
                 CONCEPT <span aria-hidden="true">·</span> PRODUCTION{" "}
@@ -568,13 +590,22 @@ export default function FortePage() {
           </div>
         </section>
 
-        <section className="section services" id="services" aria-labelledby="services-title">
+        <section className="section section-white services" id="services" aria-labelledby="services-title">
           <div className="section-inner">
-            <div className="reveal">
-              <p className="section-kicker">Thoughtfully delivered</p>
-              <h2 className="section-title" id="services-title">
-                Everything behind the moment.
-              </h2>
+            <div className="services-header reveal">
+              <div>
+                <p className="section-kicker">Thoughtfully delivered</p>
+                <h2 className="section-title" id="services-title">
+                  Everything behind the moment.
+                </h2>
+              </div>
+              <img
+                className="services-ribbon"
+                src={toSrc(ribbonImage)}
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+              />
             </div>
             <div className="services-grid reveal">
               {services.map(([number, title, description]) => (
@@ -588,7 +619,7 @@ export default function FortePage() {
           </div>
         </section>
 
-        <section className="section experience" id="process" aria-labelledby="process-title">
+        <section className="section section-champagne experience" id="process" aria-labelledby="process-title">
           <div className="section-inner">
             <div className="experience-heading reveal">
               <div>
@@ -607,24 +638,38 @@ export default function FortePage() {
                 </article>
               ))}
             </div>
-            <div className="values reveal">
-              <article>
-                <h3 className="value-title">Trust</h3>
-                <p className="value-copy">Organised, discreet, corporate-ready.</p>
-              </article>
-              <article>
-                <h3 className="value-title">Taste</h3>
-                <p className="value-copy">Premium, never excessive.</p>
-              </article>
-              <article>
-                <h3 className="value-title">Control</h3>
-                <p className="value-copy">The details are handled before guests arrive.</p>
-              </article>
+            <div className="values-split reveal">
+              <div className="quote-box">
+                <p>“I gave them the brief. They handled it.”</p>
+              </div>
+              <div className="values">
+                <article>
+                  <span className="value-num">01</span>
+                  <div>
+                    <h3 className="value-title">Trust</h3>
+                    <p className="value-copy">Organised, discreet, corporate-ready.</p>
+                  </div>
+                </article>
+                <article>
+                  <span className="value-num">02</span>
+                  <div>
+                    <h3 className="value-title">Taste</h3>
+                    <p className="value-copy">Premium, never excessive.</p>
+                  </div>
+                </article>
+                <article>
+                  <span className="value-num">03</span>
+                  <div>
+                    <h3 className="value-title">Control</h3>
+                    <p className="value-copy">The details are handled before guests arrive.</p>
+                  </div>
+                </article>
+              </div>
             </div>
           </div>
         </section>
 
-        <section className="section gallery" id="gallery" aria-labelledby="gallery-title">
+        <section className="section section-white gallery" id="gallery" aria-labelledby="gallery-title">
           <div className="section-inner">
             <div className="gallery-heading reveal">
               <div>
@@ -644,14 +689,16 @@ export default function FortePage() {
                   onClick={() => setActiveImage(index)}
                   aria-label={`View ${item.title}, ${item.type}`}
                 >
-                  <img
-                    className="gallery-photo"
-                    src={toSrc(item.image)}
-                    alt={item.alt}
-                    width={1808}
-                    height={1200}
-                    loading="lazy"
-                  />
+                  <div className="gallery-photo-wrap">
+                    <img
+                      className="gallery-photo"
+                      src={toSrc(item.image)}
+                      alt={item.alt}
+                      width={1808}
+                      height={1200}
+                      loading="lazy"
+                    />
+                  </div>
                   <span className="gallery-caption">
                     <strong>{item.title}</strong>
                     <span>
@@ -664,7 +711,7 @@ export default function FortePage() {
           </div>
         </section>
 
-        <section className="section contact" id="contact" aria-labelledby="contact-title">
+        <section className="section section-champagne contact" id="contact" aria-labelledby="contact-title">
           <div className="section-inner">
             <p className="section-kicker">A good place to begin</p>
             <h2 className="section-title" id="contact-title">
@@ -700,12 +747,11 @@ export default function FortePage() {
                     @forteexperiences <ArrowUpRight aria-hidden="true" size={15} />
                   </span>
                 </a>
-                <Button variant="gold" className="contact-whatsapp" asChild>
+                <Button variant="outline" className="contact-whatsapp border-[#c5a267] text-[#380d58] hover:bg-[#faf5ec]" asChild>
                   <a href={whatsappUrl} target="_blank" rel="noreferrer">
                     Message us on WhatsApp <ArrowUpRight aria-hidden="true" />
                   </a>
                 </Button>
-                <p className="contact-label">WhatsApp link currently uses a placeholder number.</p>
               </aside>
             </div>
           </div>

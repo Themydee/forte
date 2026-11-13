@@ -136,5 +136,7 @@ describe('FORTÉ Production Application Components (DESIGN.md Standard)', () => 
     expect(container.querySelector('header')).toBeInTheDocument();
     expect(container.querySelector('main')).toBeInTheDocument();
     expect(container.querySelector('footer')).toBeInTheDocument();
+    expect(screen.getByText(/I gave them the brief\. They handled it\./i)).toBeInTheDocument();
+    expect(screen.queryByText(/Frequently asked questions/i)).not.toBeInTheDocument();
   });
 });

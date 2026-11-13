@@ -5,69 +5,49 @@ import Image from 'next/image';
 
 export function EthosSection() {
   return (
-    <section className="py-24 bg-[#faf9f7] relative border-b border-neutral-200/80 font-sans" id="about">
+    <section className="py-24 bg-[#faf5ec] relative border-t border-[#380d58]/15 font-sans" id="about">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* Authentic Event Photography with Hairline Frame */}
-          <div className="lg:col-span-6 relative rounded-xl overflow-hidden border border-neutral-200 bg-white">
-            <div className="relative aspect-[4/3] w-full bg-neutral-100">
+          {/* Authentic Photography with Clean Gold Stroke */}
+          <div className="lg:col-span-5 rounded-2xl border border-[#c5a267]/60 bg-white p-2">
+            <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-[#f4ebdd]">
               <Image
                 src="/images/forte-welcome.jpg"
                 alt="FORTÉ event hosts welcoming guests to a considered, polished experience"
                 fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 45vw"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 40vw"
                 className="object-cover"
               />
             </div>
-
-            <div className="p-4 bg-white border-t border-neutral-100 flex items-center justify-between text-xs text-neutral-500">
-              <span className="text-[#b39266] font-semibold tracking-wider uppercase text-[0.7rem]">
-                Arrival Reception
-              </span>
-              <span>Geneva · London</span>
-            </div>
           </div>
 
-          {/* Narrative in Understated Luxury Style */}
-          <div className="lg:col-span-6 flex flex-col gap-6">
+          {/* Minimalist Statement on Warm Champagne Canvas */}
+          <div className="lg:col-span-7 flex flex-col gap-5">
             <div>
               <div className="flex items-center gap-3 mb-3">
-                <span className="h-px w-6 bg-[#c5a880]" aria-hidden="true" />
-                <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#b39266]">
+                <span className="h-px w-6 bg-[#c5a267]" aria-hidden="true" />
+                <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#8c6a32]">
                   A considered approach
                 </span>
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black tracking-tight leading-tight">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#380d58] tracking-tight leading-tight">
                 Corporate experiences with purpose.
               </h2>
             </div>
 
-            <p className="text-neutral-600 text-base leading-relaxed font-normal">
-              FORTÉ turns an organisation’s brief into a polished, purposeful and memorable experience. We start by understanding why your people are coming together, then shape the concept, production, guest journey and event-day delivery around that purpose.
-            </p>
-
-            {/* Editorial Callouts */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4 border-t border-neutral-200/60">
-              <div>
-                <h3 className="text-sm font-semibold text-black mb-1.5 tracking-tight">
-                  Discovery First
-                </h3>
-                <p className="text-xs text-neutral-600 leading-relaxed">
-                  Every concept is rooted in the purpose of your gathering, not standard templates.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-black mb-1.5 tracking-tight">
-                  Total Discretion
-                </h3>
-                <p className="text-xs text-neutral-600 leading-relaxed">
-                  Corporate-ready protocols for private summits, executive retreats, and gala dinners.
-                </p>
-              </div>
+            {/* Clean-Stroke White Callout Box */}
+            <div className="rounded-2xl border border-[#c5a267] bg-white px-7 py-6">
+              <p className="text-lg sm:text-xl font-bold text-[#380d58] leading-snug tracking-tight">
+                FORTÉ turns an organisation’s brief into a polished, purposeful and memorable experience.
+              </p>
             </div>
 
-            <div className="pt-6 border-t border-neutral-200/60">
-              <p className="text-xs uppercase tracking-[0.2em] text-[#b39266] font-medium">
+            <p className="text-[#5f526b] text-base leading-relaxed font-normal max-w-xl">
+              We start by understanding why your people gather, then shape the concept, production and guest journey around that purpose.
+            </p>
+
+            <div className="pt-5 border-t border-[#380d58]/15">
+              <p className="text-xs uppercase tracking-[0.24em] text-[#8c6a32] font-semibold">
                 Concept · Production · Experience
               </p>
             </div>

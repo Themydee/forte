@@ -28,82 +28,83 @@ export function ProcessSection() {
 
   const values = [
     {
+      number: '01',
       title: 'Trust',
       copy: 'Organised, discreet, corporate-ready.',
     },
     {
+      number: '02',
       title: 'Taste',
       copy: 'Premium, never excessive.',
     },
     {
+      number: '03',
       title: 'Control',
       copy: 'The details are handled before guests arrive.',
     },
   ];
 
   return (
-    <section className="py-24 bg-[#faf9f7] relative border-b border-neutral-200/80 font-sans" id="process">
+    <section className="py-24 bg-[#faf5ec] relative border-t border-[#380d58]/15 font-sans" id="process">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Section Header */}
-        <div className="max-w-3xl mb-16">
+        <div className="max-w-3xl mb-14">
           <div className="flex items-center gap-3 mb-3">
-            <span className="h-px w-6 bg-[#c5a880]" aria-hidden="true" />
-            <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#b39266]">
+            <span className="h-px w-6 bg-[#c5a267]" aria-hidden="true" />
+            <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#8c6a32]">
               A clear path, from day one
             </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#380d58] tracking-tight leading-tight">
             You give the brief. We handle the rest.
           </h2>
-          <p className="text-neutral-600 text-base mt-4 max-w-xl font-normal leading-relaxed">
-            A structured, discreet four-stage roadmap designed to remove friction from executive event delivery.
-          </p>
         </div>
 
-        {/* 4 Process Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-l border-neutral-200 bg-white mb-16">
+        {/* 4 Clean Hairline Steps */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-l border-[#380d58]/15 bg-white/80 mb-14">
           {steps.map((step) => (
             <article
               key={step.number}
-              className="p-8 border-r border-b border-neutral-200 flex flex-col justify-between min-h-[260px] hover:bg-[#faf9f7] transition-colors"
+              className="p-8 border-r border-b border-[#380d58]/15 flex flex-col gap-3 hover:bg-white transition-colors"
             >
-              <div>
-                <span className="text-xs font-semibold text-[#b39266] tracking-wider block mb-4">
-                  Phase {step.number}
-                </span>
+              <span className="text-xs font-bold text-[#8c6a32] tracking-[0.14em]">
+                {step.number}
+              </span>
 
-                <h3 className="text-2xl font-bold text-black tracking-tight mb-3">
-                  {step.title}
-                </h3>
+              <h3 className="text-xl font-bold text-[#380d58] tracking-tight">
+                {step.title}
+              </h3>
 
-                <p className="text-sm text-neutral-600 leading-relaxed font-normal">
-                  {step.copy}
-                </p>
-              </div>
-
-              <div className="pt-6 mt-6 border-t border-neutral-100 flex items-center justify-between text-[0.7rem] uppercase tracking-wider text-neutral-400">
-                <span>Stage 0{step.number}</span>
-                <span>Discreet execution</span>
-              </div>
+              <p className="text-sm text-[#5f526b] leading-relaxed font-normal">
+                {step.copy}
+              </p>
             </article>
           ))}
         </div>
 
-        {/* 3 Core Bedrock Values Strip */}
-        <div className="border-t border-neutral-200/80 pt-12">
-          <div className="text-xs uppercase tracking-[0.2em] font-semibold text-neutral-400 mb-6">
-            Our Bedrock Principles
+        {/* Quote Callout & Numbered Principles (Slide 3 Aesthetic) */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+          <div className="lg:col-span-5 rounded-2xl border border-[#c5a267] bg-white px-8 py-7">
+            <p className="text-xl sm:text-2xl font-bold text-[#380d58] leading-snug tracking-tight">
+              “I gave them the brief. They handled it.”
+            </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+          <div className="lg:col-span-7 border-t border-[#380d58]/15">
             {values.map((val) => (
-              <div key={val.title} className="flex flex-col gap-2">
-                <div className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#c5a880]" />
-                  <h4 className="text-lg font-bold text-black tracking-tight">{val.title}</h4>
+              <div
+                key={val.title}
+                className="grid grid-cols-[2.75rem_1fr] gap-4 py-4 border-b border-[#380d58]/15 items-baseline"
+              >
+                <span className="text-xs font-bold text-[#8c6a32] tracking-[0.14em]">
+                  {val.number}
+                </span>
+                <div>
+                  <h4 className="text-base font-bold text-[#380d58] tracking-tight">
+                    {val.title}
+                  </h4>
+                  <p className="text-sm text-[#5f526b] mt-0.5">{val.copy}</p>
                 </div>
-                <p className="text-sm text-neutral-600 leading-relaxed pl-3.5">
-                  {val.copy}
-                </p>
               </div>
             ))}
           </div>

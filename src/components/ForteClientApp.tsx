@@ -7,7 +7,6 @@ import { EthosSection } from './EthosSection';
 import { ServicesSection } from './ServicesSection';
 import { ProcessSection } from './ProcessSection';
 import { PortfolioSection } from './PortfolioSection';
-import { FaqSection } from './FaqSection';
 import { ContactSection } from './ContactSection';
 import { SiteFooter } from './SiteFooter';
 
@@ -21,7 +20,6 @@ export function ForteClientApp() {
         <ServicesSection />
         <ProcessSection />
         <PortfolioSection />
-        <FaqSection />
         <ContactSection />
       </main>
       <SiteFooter />

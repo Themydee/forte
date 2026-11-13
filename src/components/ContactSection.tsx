@@ -127,33 +127,33 @@ export function ContactSection({ initialBrief = '', initialEventType = '' }: Con
   };
 
   return (
-    <section className="py-24 bg-[#faf9f7] relative border-b border-neutral-200/80 font-sans" id="contact">
+    <section className="py-24 bg-[#faf5ec] relative border-t border-[#380d58]/15 font-sans" id="contact">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Section Header */}
-        <div className="max-w-3xl mb-16">
+        <div className="max-w-3xl mb-14">
           <div className="flex items-center gap-3 mb-3">
-            <span className="h-px w-6 bg-[#c5a880]" aria-hidden="true" />
-            <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#b39266]">
+            <span className="h-px w-6 bg-[#c5a267]" aria-hidden="true" />
+            <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#8c6a32]">
               A good place to begin
             </span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#380d58] tracking-tight leading-tight">
             Send Us Your Brief.
           </h2>
-          <p className="text-base text-neutral-600 mt-4 font-normal leading-relaxed">
+          <p className="text-base text-[#5f526b] mt-3 font-normal leading-relaxed">
             Tell us what you’re planning. We’ll take it from there.
           </p>
         </div>
 
         {/* Contact Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
-          {/* Main Brief Form */}
-          <div className="lg:col-span-8 bg-white p-8 sm:p-12 border border-neutral-200">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          {/* Clean Gold-Stroked Form Card */}
+          <div className="lg:col-span-8 bg-white p-8 sm:p-10 rounded-2xl border border-[#c5a267]/65">
             <form onSubmit={handleSubmit} noValidate className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="contact-name" className="text-xs font-semibold text-black tracking-wide">
-                    Name <span className="text-[#b39266]">*</span>
+                  <label htmlFor="contact-name" className="text-xs font-semibold text-[#380d58] tracking-wide">
+                    Name <span className="text-[#8c6a32]">*</span>
                   </label>
                   <input
                     id="contact-name"
@@ -163,13 +163,13 @@ export function ContactSection({ initialBrief = '', initialEventType = '' }: Con
                     required
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-white border border-neutral-300 px-4 py-3 text-sm text-black focus:outline-none focus:border-[#c5a880] focus:ring-1 focus:ring-[#c5a880] transition-colors"
+                    className="w-full bg-white rounded-lg border border-[#380d58]/20 px-4 py-3 text-sm text-[#2c1e38] focus:outline-none focus:border-[#380d58] focus:ring-1 focus:ring-[#c5a267] transition-colors"
                   />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="contact-company" className="text-xs font-semibold text-black tracking-wide">
-                    Company <span className="text-[#b39266]">*</span>
+                  <label htmlFor="contact-company" className="text-xs font-semibold text-[#380d58] tracking-wide">
+                    Company <span className="text-[#8c6a32]">*</span>
                   </label>
                   <input
                     id="contact-company"
@@ -179,14 +179,14 @@ export function ContactSection({ initialBrief = '', initialEventType = '' }: Con
                     required
                     value={company}
                     onChange={(e) => setCompany(e.target.value)}
-                    className="w-full bg-white border border-neutral-300 px-4 py-3 text-sm text-black focus:outline-none focus:border-[#c5a880] focus:ring-1 focus:ring-[#c5a880] transition-colors"
+                    className="w-full bg-white rounded-lg border border-[#380d58]/20 px-4 py-3 text-sm text-[#2c1e38] focus:outline-none focus:border-[#380d58] focus:ring-1 focus:ring-[#c5a267] transition-colors"
                   />
                 </div>
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="contact-email" className="text-xs font-semibold text-black tracking-wide">
-                  Email <span className="text-[#b39266]">*</span>
+                <label htmlFor="contact-email" className="text-xs font-semibold text-[#380d58] tracking-wide">
+                  Email <span className="text-[#8c6a32]">*</span>
                 </label>
                 <input
                   id="contact-email"
@@ -197,14 +197,14 @@ export function ContactSection({ initialBrief = '', initialEventType = '' }: Con
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-white border border-neutral-300 px-4 py-3 text-sm text-black focus:outline-none focus:border-[#c5a880] focus:ring-1 focus:ring-[#c5a880] transition-colors"
+                  className="w-full bg-white rounded-lg border border-[#380d58]/20 px-4 py-3 text-sm text-[#2c1e38] focus:outline-none focus:border-[#380d58] focus:ring-1 focus:ring-[#c5a267] transition-colors"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="contact-type" className="text-xs font-semibold text-black tracking-wide">
-                    Event type <span className="text-[#b39266]">*</span>
+                  <label htmlFor="contact-type" className="text-xs font-semibold text-[#380d58] tracking-wide">
+                    Event type <span className="text-[#8c6a32]">*</span>
                   </label>
                   <select
                     id="contact-type"
@@ -212,7 +212,7 @@ export function ContactSection({ initialBrief = '', initialEventType = '' }: Con
                     required
                     value={eventType}
                     onChange={(e) => setEventType(e.target.value)}
-                    className="w-full bg-white border border-neutral-300 px-4 py-3 text-sm text-black focus:outline-none focus:border-[#c5a880] focus:ring-1 focus:ring-[#c5a880] transition-colors"
+                    className="w-full bg-white rounded-lg border border-[#380d58]/20 px-4 py-3 text-sm text-[#2c1e38] focus:outline-none focus:border-[#380d58] focus:ring-1 focus:ring-[#c5a267] transition-colors"
                   >
                     <option value="" disabled>
                       Select event type
@@ -227,8 +227,8 @@ export function ContactSection({ initialBrief = '', initialEventType = '' }: Con
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="contact-date" className="text-xs font-semibold text-black tracking-wide">
-                    Event date <span className="text-neutral-400 font-normal">(optional)</span>
+                  <label htmlFor="contact-date" className="text-xs font-semibold text-[#380d58] tracking-wide">
+                    Event date <span className="text-[#5f526b] font-normal">(optional)</span>
                   </label>
                   <input
                     id="contact-date"
@@ -236,14 +236,14 @@ export function ContactSection({ initialBrief = '', initialEventType = '' }: Con
                     type="date"
                     value={eventDate}
                     onChange={(e) => setEventDate(e.target.value)}
-                    className="w-full bg-white border border-neutral-300 px-4 py-3 text-sm text-black focus:outline-none focus:border-[#c5a880] focus:ring-1 focus:ring-[#c5a880] transition-colors"
+                    className="w-full bg-white rounded-lg border border-[#380d58]/20 px-4 py-3 text-sm text-[#2c1e38] focus:outline-none focus:border-[#380d58] focus:ring-1 focus:ring-[#c5a267] transition-colors"
                   />
                 </div>
               </div>
 
               <div className="flex flex-col gap-2">
-                <label htmlFor="contact-brief" className="text-xs font-semibold text-black tracking-wide">
-                  Your brief <span className="text-[#b39266]">*</span>
+                <label htmlFor="contact-brief" className="text-xs font-semibold text-[#380d58] tracking-wide">
+                  Your brief <span className="text-[#8c6a32]">*</span>
                 </label>
                 <textarea
                   id="contact-brief"
@@ -254,13 +254,13 @@ export function ContactSection({ initialBrief = '', initialEventType = '' }: Con
                   value={brief}
                   onChange={(e) => setBrief(e.target.value)}
                   placeholder="A little about what you’re planning, who it’s for and what matters most."
-                  className="w-full bg-white border border-neutral-300 p-4 text-sm text-black focus:outline-none focus:border-[#c5a880] focus:ring-1 focus:ring-[#c5a880] transition-colors resize-y min-h-[140px]"
+                  className="w-full bg-white rounded-lg border border-[#380d58]/20 p-4 text-sm text-[#2c1e38] focus:outline-none focus:border-[#380d58] focus:ring-1 focus:ring-[#c5a267] transition-colors resize-y min-h-[130px]"
                 />
               </div>
 
               {status && (
                 <div
-                  className={`p-4 text-xs leading-relaxed flex flex-col gap-2 ${
+                  className={`p-4 rounded-lg text-xs leading-relaxed flex flex-col gap-2 ${
                     status.tone === 'success'
                       ? 'bg-emerald-50 border border-emerald-300 text-emerald-900'
                       : 'bg-rose-50 border border-rose-300 text-rose-900'
@@ -273,7 +273,7 @@ export function ContactSection({ initialBrief = '', initialEventType = '' }: Con
                     <button
                       type="button"
                       onClick={handleCopy}
-                      className="self-start inline-flex items-center gap-1.5 px-3 py-1.5 bg-white text-black hover:bg-neutral-100 border border-neutral-300 font-semibold text-xs transition-colors"
+                      className="self-start inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-white text-[#380d58] hover:bg-[#faf5ec] border border-[#c5a267] font-semibold text-xs transition-colors"
                     >
                       {copied ? (
                         <>
@@ -291,59 +291,55 @@ export function ContactSection({ initialBrief = '', initialEventType = '' }: Con
                 </div>
               )}
 
-              {/* Primary Action */}
               <button
                 type="submit"
                 disabled={sending}
-                className="w-full py-4 bg-[#c5a880] hover:bg-[#b39266] text-black font-semibold text-xs uppercase tracking-[0.18em] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
+                className="w-full py-4 rounded-full bg-[#380d58] hover:bg-[#4b1573] text-[#faf5ec] border border-[#c5a267]/50 font-semibold text-xs uppercase tracking-[0.18em] transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                 <span>{sending ? 'Preparing your brief…' : 'Send Brief'}</span>
-                <ArrowRight size={15} aria-hidden="true" />
+                <ArrowRight size={15} className="text-[#e2cca8]" aria-hidden="true" />
               </button>
             </form>
           </div>
 
-          {/* Direct Communications Aside */}
-          <aside className="lg:col-span-4 bg-white p-8 border border-neutral-200 flex flex-col gap-6">
-            <h3 className="text-base font-bold text-black tracking-tight">
+          {/* Direct Contact Card with Clean Hairline Strokes */}
+          <aside className="lg:col-span-4 bg-white p-8 rounded-2xl border border-[#c5a267]/65 flex flex-col gap-5">
+            <h3 className="text-base font-bold text-[#380d58] tracking-tight">
               Direct Contact
             </h3>
 
-            <div className="flex flex-col gap-5 text-xs">
-              <a href={`mailto:${emailAddress}`} className="flex flex-col gap-1 group">
-                <span className="text-[0.7rem] uppercase tracking-wider text-neutral-400">Direct Email</span>
-                <span className="text-sm font-medium text-black group-hover:text-[#b39266] transition-colors">{emailAddress}</span>
+            <div className="flex flex-col gap-4 text-xs">
+              <a href={`mailto:${emailAddress}`} className="flex flex-col gap-1 pb-4 border-b border-[#380d58]/12 group">
+                <span className="text-[0.68rem] uppercase tracking-wider text-[#8c6a32] font-semibold">Email</span>
+                <span className="text-sm font-medium text-[#380d58] group-hover:text-[#8c6a32] transition-colors">{emailAddress}</span>
               </a>
 
-              <a href="https://forteexperiences.com" target="_blank" rel="noreferrer" className="flex flex-col gap-1 group">
-                <span className="text-[0.7rem] uppercase tracking-wider text-neutral-400">Official Website</span>
-                <span className="text-sm font-medium text-black group-hover:text-[#b39266] transition-colors flex items-center gap-1">
+              <a href="https://forteexperiences.com" target="_blank" rel="noreferrer" className="flex flex-col gap-1 pb-4 border-b border-[#380d58]/12 group">
+                <span className="text-[0.68rem] uppercase tracking-wider text-[#8c6a32] font-semibold">Website</span>
+                <span className="text-sm font-medium text-[#380d58] group-hover:text-[#8c6a32] transition-colors flex items-center gap-1">
                   <span>forteexperiences.com</span>
                   <ArrowUpRight size={13} />
                 </span>
               </a>
 
-              <a href="https://www.instagram.com/forteexperiences/" target="_blank" rel="noreferrer" className="flex flex-col gap-1 group">
-                <span className="text-[0.7rem] uppercase tracking-wider text-neutral-400">Instagram Portfolio</span>
-                <span className="text-sm font-medium text-black group-hover:text-[#b39266] transition-colors flex items-center gap-1">
+              <a href="https://www.instagram.com/forteexperiences/" target="_blank" rel="noreferrer" className="flex flex-col gap-1 pb-4 border-b border-[#380d58]/12 group">
+                <span className="text-[0.68rem] uppercase tracking-wider text-[#8c6a32] font-semibold">Instagram</span>
+                <span className="text-sm font-medium text-[#380d58] group-hover:text-[#8c6a32] transition-colors flex items-center gap-1">
                   <span>@forteexperiences</span>
                   <ArrowUpRight size={13} />
                 </span>
               </a>
 
-              <div className="pt-4 border-t border-neutral-100">
+              <div className="pt-2">
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 py-3 bg-neutral-50 hover:bg-[#c5a880] hover:text-black border border-neutral-200 text-black text-xs font-semibold tracking-wider uppercase transition-colors"
+                  className="w-full inline-flex items-center justify-center gap-2 py-3.5 rounded-full bg-white hover:bg-[#faf5ec] border border-[#c5a267] text-[#380d58] text-xs font-semibold tracking-wider uppercase transition-colors"
                 >
                   <span>Message us on WhatsApp</span>
-                  <ArrowUpRight size={14} />
+                  <ArrowUpRight size={14} className="text-[#8c6a32]" />
                 </a>
-                <p className="text-[0.7rem] text-neutral-400 mt-2 text-center">
-                  WhatsApp liaison is monitored during European business hours.
-                </p>
               </div>
             </div>
           </aside>

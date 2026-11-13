@@ -54,7 +54,7 @@ export function LightboxModal({ items, activeIndex, onClose, onNavigate }: Light
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md p-4 sm:p-6 lg:p-10 font-sans"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#1c052f]/92 backdrop-blur-md p-4 sm:p-6 lg:p-10 font-sans"
       role="dialog"
       aria-modal="true"
       aria-label={`${current.title} photograph view`}
@@ -66,7 +66,7 @@ export function LightboxModal({ items, activeIndex, onClose, onNavigate }: Light
       <button
         type="button"
         onClick={onClose}
-        className="absolute top-6 right-6 z-50 p-3 rounded-full bg-white text-black hover:bg-[#c5a880] hover:text-black border border-neutral-200 transition-all focus:outline-none shadow-md"
+        className="absolute top-6 right-6 z-50 p-3 rounded-full bg-white text-[#380d58] hover:bg-[#faf5ec] border border-[#c5a267] transition-all focus:outline-none shadow-md"
         aria-label="Close dialog"
       >
         <X size={20} />
@@ -76,7 +76,7 @@ export function LightboxModal({ items, activeIndex, onClose, onNavigate }: Light
       <button
         type="button"
         onClick={handlePrev}
-        className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-50 p-3.5 rounded-full bg-white text-black hover:bg-[#c5a880] hover:text-black border border-neutral-200 transition-all focus:outline-none shadow-md"
+        className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-50 p-3.5 rounded-full bg-white text-[#380d58] hover:bg-[#faf5ec] border border-[#c5a267] transition-all focus:outline-none shadow-md"
         aria-label="Previous photograph"
       >
         <ChevronLeft size={22} />
@@ -86,16 +86,16 @@ export function LightboxModal({ items, activeIndex, onClose, onNavigate }: Light
       <button
         type="button"
         onClick={handleNext}
-        className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-50 p-3.5 rounded-full bg-white text-black hover:bg-[#c5a880] hover:text-black border border-neutral-200 transition-all focus:outline-none shadow-md"
+        className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-50 p-3.5 rounded-full bg-white text-[#380d58] hover:bg-[#faf5ec] border border-[#c5a267] transition-all focus:outline-none shadow-md"
         aria-label="Next photograph"
       >
         <ChevronRight size={22} />
       </button>
 
       {/* Main Content Modal */}
-      <div className="relative max-w-5xl w-full max-h-[90vh] bg-white rounded-2xl overflow-hidden border border-neutral-200 shadow-2xl flex flex-col">
+      <div className="relative max-w-5xl w-full max-h-[90vh] bg-white rounded-2xl overflow-hidden border border-[#c5a267]/70 shadow-2xl flex flex-col">
         {/* Image viewport */}
-        <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] bg-black">
+        <div className="relative w-full aspect-[16/10] sm:aspect-[16/9] bg-[#25063c]">
           <Image
             src={current.image}
             alt={current.alt}
@@ -107,14 +107,14 @@ export function LightboxModal({ items, activeIndex, onClose, onNavigate }: Light
         </div>
 
         {/* Caption & Metadata Bar */}
-        <div className="p-6 bg-white border-t border-neutral-200 flex items-center justify-between gap-4">
+        <div className="p-6 bg-white border-t border-[#380d58]/15 flex items-center justify-between gap-4">
           <div>
-            <h4 className="text-lg sm:text-xl font-bold text-black tracking-tight">{current.title}</h4>
-            <p className="text-xs text-[#b39266] font-semibold mt-0.5">{current.type}</p>
+            <h4 className="text-lg sm:text-xl font-bold text-[#380d58] tracking-tight">{current.title}</h4>
+            <p className="text-xs text-[#8c6a32] font-semibold uppercase tracking-[0.14em] mt-0.5">{current.type}</p>
           </div>
 
           <div className="shrink-0 flex items-center gap-3">
-            <span className="text-xs tracking-[0.2em] uppercase font-mono text-black font-bold">
+            <span className="text-xs tracking-[0.2em] uppercase text-[#5f526b] font-semibold">
               {activeIndex + 1} of {items.length}
             </span>
           </div>

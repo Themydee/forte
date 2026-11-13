@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import '../styles.css';
 
 export const viewport: Viewport = {
-  themeColor: '#ffffff',
+  themeColor: '#380d58',
   width: 'device-width',
   initialScale: 1,
 };
@@ -88,7 +88,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-white text-black antialiased selection:bg-black selection:text-white overflow-x-hidden min-h-screen flex flex-col font-sans">
+      <body className="bg-white text-[#2c1e38] antialiased selection:bg-[#380d58] selection:text-[#faf5ec] overflow-x-hidden min-h-screen flex flex-col font-sans">
         {children}
       </body>
     </html>

@@ -78,72 +78,58 @@ export function PortfolioSection() {
   ];
 
   return (
-    <section className="py-24 bg-white relative border-b border-neutral-200/80 font-sans" id="gallery">
+    <section className="py-24 bg-white relative border-t border-[#380d58]/15 font-sans" id="gallery">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-16 pb-6 border-b border-neutral-200">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-14 pb-6 border-b border-[#380d58]/15">
           <div>
             <div className="flex items-center gap-3 mb-3">
-              <span className="h-px w-6 bg-[#c5a880]" aria-hidden="true" />
-              <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#b39266]">
+              <span className="h-px w-6 bg-[#c5a267]" aria-hidden="true" />
+              <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#8c6a32]">
                 A sense of the occasion
               </span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black tracking-tight leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#380d58] tracking-tight leading-tight">
               Feel the room.
             </h2>
           </div>
-          <p className="text-sm text-neutral-600 font-normal">
+          <p className="text-sm italic text-[#8c6a32] font-normal">
             A few moments, imagined by FORTÉ.
           </p>
         </div>
 
-        {/* Gallery Grid of Full Architectural Photographs */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Clean Gold-Stroked Photo Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
           {galleryItems.map((item, idx) => (
             <button
               key={item.id}
               type="button"
               onClick={() => setLightboxIndex(idx)}
-              className="group text-left border border-neutral-200 bg-white hover:border-[#c5a880] transition-all flex flex-col focus:outline-none focus:ring-2 focus:ring-[#c5a880]"
+              className="group text-left rounded-2xl border border-[#c5a267]/50 bg-white hover:border-[#380d58] transition-all flex flex-col overflow-hidden focus:outline-none focus:ring-2 focus:ring-[#c5a267]"
               aria-label={`View ${item.title}, ${item.type}`}
             >
-              {/* Generous High-Impact Architectural Photo Frame */}
-              <div className="relative aspect-[16/10] w-full bg-neutral-100 overflow-hidden">
+              <div className="relative aspect-[16/10] w-full bg-[#faf5ec] overflow-hidden">
                 <Image
                   src={item.image}
                   alt={item.alt}
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                  className="object-cover group-hover:scale-104 transition-transform duration-500 ease-out"
                 />
               </div>
 
-              {/* Editorial Metadata */}
-              <div className="p-6 flex flex-col justify-between flex-1">
-                <div>
-                  <div className="flex items-center justify-between gap-2 mb-2">
-                    <span className="text-[0.7rem] uppercase tracking-wider text-[#b39266] font-semibold">
-                      {item.type}
-                    </span>
-                    <span className="text-xs text-neutral-400">
-                      {item.location}
-                    </span>
-                  </div>
-
-                  <h3 className="text-lg font-bold text-black tracking-tight mb-1.5">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-xs text-neutral-600 leading-relaxed font-normal">
-                    {item.description}
-                  </p>
-                </div>
-
-                <div className="mt-5 pt-4 border-t border-neutral-100 flex items-center justify-between text-xs text-neutral-400 group-hover:text-black transition-colors">
-                  <span>Enlarge photograph</span>
-                  <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </div>
+              <div className="px-5 py-4 border-t border-[#380d58]/12 flex items-center justify-between gap-3 w-full">
+                <h3 className="text-base font-bold text-[#380d58] tracking-tight">
+                  {item.title}
+                </h3>
+                <span className="text-[0.68rem] uppercase tracking-[0.14em] text-[#8c6a32] font-semibold inline-flex items-center gap-1 shrink-0">
+                  {item.type}
+                  <ArrowUpRight
+                    size={13}
+                    className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                    aria-hidden="true"
+                  />
+                </span>
               </div>
             </button>
           ))}
