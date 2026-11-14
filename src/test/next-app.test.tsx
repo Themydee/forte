@@ -7,8 +7,8 @@ import { EthosSection } from '@/components/EthosSection';
 import { ServicesSection } from '@/components/ServicesSection';
 import { ProcessSection } from '@/components/ProcessSection';
 import { PortfolioSection } from '@/components/PortfolioSection';
-import { ContactSection } from '@/components/ContactSection';
 import { SiteFooter } from '@/components/SiteFooter';
+import { ContactStrip } from '@/components/ContactStrip';
 import { ForteClientApp } from '@/components/ForteClientApp';
 
 describe('FORTÉ Production Application Components (DESIGN.md Standard)', () => {
@@ -38,11 +38,10 @@ describe('FORTÉ Production Application Components (DESIGN.md Standard)', () => 
     expect(screen.getByRole('link', { name: /Discover FORTÉ/i })).toBeInTheDocument();
   });
 
-  it('renders EthosSection with purposeful narrative and 3 disciplines', () => {
+  it('renders EthosSection with purposeful narrative', () => {
     render(<EthosSection />);
     expect(screen.getByText(/A considered approach/i)).toBeInTheDocument();
     expect(screen.getByText(/Corporate experiences with purpose/i)).toBeInTheDocument();
-    expect(screen.getByText(/Concept · Production · Experience/i)).toBeInTheDocument();
   });
 
   it('renders ServicesSection with all 6 authentic services', () => {
@@ -88,41 +87,15 @@ describe('FORTÉ Production Application Components (DESIGN.md Standard)', () => 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
-  it('validates ContactSection required fields and handles clipboard copy fallback', async () => {
-    const writeTextSpy = vi.spyOn(navigator.clipboard, 'writeText').mockResolvedValue();
-
-    render(<ContactSection />);
-    const submitBtn = screen.getByRole('button', { name: /Send Brief/i });
-
-    // Submit without input triggers validation
-    fireEvent.click(submitBtn);
-    expect(await screen.findByText(/Please complete each required field before continuing/i)).toBeInTheDocument();
-
-    // Fill valid data
-    const nameInput = screen.getByLabelText(/^Name/i);
-    const companyInput = screen.getByLabelText(/^Company/i);
-    const emailInput = screen.getByLabelText(/^Email/i);
-    const typeSelect = screen.getByLabelText(/Event type/i);
-    const briefInput = screen.getByLabelText(/Your brief/i);
-
-    fireEvent.change(nameInput, { target: { value: 'Eleanor Vance' } });
-    fireEvent.change(companyInput, { target: { value: 'Vance Advisory Group' } });
-    fireEvent.change(emailInput, { target: { value: 'e.vance@vanceadvisory.com' } });
-    fireEvent.change(typeSelect, { target: { value: 'Corporate event' } });
-    fireEvent.change(briefInput, { target: { value: 'Annual executive conference in London.' } });
-
-    fireEvent.click(submitBtn);
-
-    const statusMessage = await screen.findByText(/Your email app is ready with your brief/i, {}, { timeout: 2000 });
-    expect(statusMessage).toBeInTheDocument();
-
-    // Copy brief details
-    const copyBtn = screen.getByRole('button', { name: /Copy brief details/i });
-    fireEvent.click(copyBtn);
-    expect(writeTextSpy).toHaveBeenCalledWith(expect.stringContaining('Vance Advisory Group'));
-    expect(await screen.findByText(/Copied to clipboard!/i)).toBeInTheDocument();
-
-    writeTextSpy.mockRestore();
+  it('renders the home ContactStrip linking to the contact page and direct channels', () => {
+    render(<ContactStrip />);
+    expect(screen.getByRole('heading', { name: /Send Us Your Brief/i })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: /Start your brief/i })).toHaveAttribute('href', '/contact');
+    expect(screen.getByRole('link', { name: /forteexperiences@gmail.com/i })).toHaveAttribute(
+      'href',
+      'mailto:forteexperiences@gmail.com',
+    );
+    expect(screen.getByRole('link', { name: /WhatsApp/i })).toHaveAttribute('target', '_blank');
   });
 
   it('renders SiteFooter with authentic wordmark and back-to-top anchor', () => {

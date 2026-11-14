@@ -1,9 +1,29 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap");
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+
+/* Palette: "Midnight & gold". Token names are kept from the first palette for
+   Tailwind ergonomics, so read them by role, not by name:
+   champagne = light canvas (cool white), ink = body text (near-black navy),
+   night = dark panels (midnight), plum = primary accent (violet),
+   gold = highlight and CTA accent. */
+@theme {
+  --color-champagne: #f5f6fa;
+  --color-champagne-deep: #e9ebf3;
+  --color-ink: #0f1222;
+  --color-night: #0b0f1e;
+  --color-plum: #6d3fd8;
+  --color-plum-bright: #8b6ae6;
+  --color-gold: #d9a441;
+  --color-gold-soft: #f3e3bd;
+  --color-gold-deep: #8a6118;
+
+  /* One radius for every button: `rounded-button`. */
+  --radius-button: 20px;
+}
 
 /*
  * Design system definition.
@@ -152,8 +172,8 @@
       system-ui,
       -apple-system,
       sans-serif;
-    background-color: #ffffff;
-    color: #2c1e38;
+    background-color: #f5f6fa;
+    color: #0f1222;
     overflow-x: hidden;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
@@ -1386,8 +1406,347 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid #c5a267;
+  outline: 2px solid #d9a441;
   outline-offset: 2px;
 }
 
 
+
+/* ==========================================================================
+   Studio layer (design concept adapted from bit4orge)
+   ========================================================================== */
+
+html {
+  scroll-padding-top: 80px;
+}
+
+h1, h2, h3 {
+  text-wrap: balance;
+}
+
+::selection {
+  background-color: #d9a441;
+  color: #0b0f1e;
+}
+
+/* Buttons: colour fades, a slight press, and the arrow slips out and back in on hover. */
+.micro-button {
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    transform 160ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    background-color 240ms ease,
+    border-color 240ms ease,
+    color 240ms ease;
+}
+
+.micro-button:active {
+  transform: scale(0.97);
+}
+
+@keyframes micro-arrow-diagonal {
+  0% { transform: translate(0, 0); opacity: 1; }
+  40% { transform: translate(70%, -70%); opacity: 0; }
+  41% { transform: translate(-70%, 70%); opacity: 0; }
+  100% { transform: translate(0, 0); opacity: 1; }
+}
+
+@keyframes micro-arrow-down {
+  0% { transform: translateY(0); opacity: 1; }
+  40% { transform: translateY(80%); opacity: 0; }
+  41% { transform: translateY(-80%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .micro-button:hover .lucide-arrow-up-right,
+  .group:hover .micro-arrow .lucide-arrow-up-right {
+    animation: micro-arrow-diagonal 440ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .micro-button:hover .lucide-arrow-down {
+    animation: micro-arrow-down 440ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Navbar load-in: the bar drops in, then its items rise in a stagger. */
+@keyframes nav-drop {
+  from { opacity: 0; transform: translateY(-120%); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes nav-rise {
+  from { opacity: 0; filter: blur(6px); transform: translateY(14px); }
+  to { opacity: 1; filter: blur(0); transform: none; }
+}
+
+.nav-drop {
+  animation: nav-drop 800ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.nav-rise {
+  animation: nav-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(250ms + var(--nav-i, 0) * 60ms);
+}
+
+@keyframes mobile-menu-in {
+  from { opacity: 0; transform: translateY(-12px) scale(0.97); }
+  to { opacity: 1; transform: none; }
+}
+
+.mobile-menu-panel {
+  animation: mobile-menu-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: top center;
+}
+
+/* Hero copy rising in on load. */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(24px); filter: blur(8px); }
+  to { opacity: 1; transform: none; filter: blur(0); }
+}
+
+.hero-rise {
+  animation: hero-rise 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(350ms + var(--rise-i, 0) * 110ms);
+}
+
+/* Event-format marquee, softened at both edges. */
+.marquee {
+  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+.marquee__track {
+  animation: marquee-scroll 38s linear infinite;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* Film grain for dark panels (inline SVG noise, no asset). */
+.grain {
+  position: relative;
+}
+
+.grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 220px 220px;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+}
+
+.grain > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Gallery: pinned stage whose names and cards both move by --fw-p. */
+.featured-work {
+  --fw-name: 8.5rem;
+  --fw-card: 64svh;
+  --fw-gap: 2.5rem;
+}
+
+@media (min-width: 1024px) {
+  .featured-work {
+    height: calc(100svh + (var(--fw-n) - 1) * 80svh);
+  }
+
+  .featured-work__stage {
+    position: sticky;
+    top: 0.75rem;
+    height: calc(100svh - 1.5rem);
+    overflow: hidden;
+  }
+
+  .featured-work__name {
+    height: var(--fw-name);
+  }
+
+  .featured-work__names {
+    transform: translateY(calc(-1 * (var(--fw-p) + 0.5) * var(--fw-name)));
+  }
+
+  .featured-work__cards {
+    gap: var(--fw-gap);
+    transform: translateY(
+      calc(-1 * (var(--fw-p) + 0.5) * var(--fw-card) - var(--fw-p) * var(--fw-gap))
+    );
+  }
+
+  .featured-work__card {
+    height: var(--fw-card);
+    aspect-ratio: auto;
+  }
+}
+
+/* Short laptop screens: smaller name rows and cards so the pinned stage fits. */
+@media (min-width: 1024px) and (max-height: 760px) {
+  .featured-work {
+    --fw-name: 6.5rem;
+    --fw-card: 58svh;
+    --fw-gap: 1.75rem;
+  }
+}
+
+/* Service rows: each row's image eases in as it scrolls into view. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .service-row {
+      animation: service-row-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 80%;
+    }
+  }
+}
+
+@keyframes service-row-in {
+  from { opacity: 0.3; transform: translateY(2rem); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .micro-button,
+  .nav-drop,
+  .nav-rise,
+  .hero-rise,
+  .mobile-menu-panel,
+  .marquee__track {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   Framed hero + docked navbar
+   A night frame wraps the hero panel. The nav sits on the frame's top strip,
+   and the panel rises into a tab at the top right that holds the CTA. The
+   hero draws the shapes; the header lays its items over the same geometry.
+   ========================================================================== */
+
+:root {
+  --hero-gap: 0.5rem;
+  --frame-pad: 0.5rem;
+  --frame-r: 1.25rem;
+  --panel-r: 1rem;
+  --nav-h: 4.25rem;
+  --tab-w: 4.75rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --hero-gap: 0.75rem;
+    --frame-pad: 0.625rem;
+    --frame-r: 1.75rem;
+    --panel-r: 1.35rem;
+    --nav-h: 4.75rem;
+    --tab-w: 5.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --nav-h: 5.5rem;
+    --tab-w: 16.5rem;
+  }
+}
+
+.studio-hero {
+  padding: var(--hero-gap);
+}
+
+.studio-hero__frame {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100svh - 2 * var(--hero-gap));
+  border-radius: var(--frame-r);
+  background: var(--color-night);
+  padding: var(--frame-pad);
+}
+
+.studio-hero__panel {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--panel-r);
+  background: var(--color-night);
+}
+
+/* The frame's top strip, covering the panel everywhere except the tab. */
+.studio-hero__strip {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  right: calc(var(--frame-pad) + var(--tab-w));
+  height: var(--nav-h);
+  background: var(--color-night);
+  border-top-left-radius: var(--frame-r);
+  border-bottom-right-radius: var(--panel-r);
+  pointer-events: none;
+}
+
+/* Inverse corners that round the panel where it meets the strip. */
+.studio-hero__corner {
+  position: absolute;
+  z-index: 2;
+  width: var(--panel-r);
+  height: var(--panel-r);
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 100% 100%,
+    transparent calc(var(--panel-r) - 0.5px),
+    var(--color-night) var(--panel-r)
+  );
+}
+
+.studio-hero__corner--start {
+  left: var(--frame-pad);
+  top: var(--nav-h);
+}
+
+.studio-hero__corner--tab {
+  right: calc(var(--frame-pad) + var(--tab-w) - var(--panel-r));
+  top: var(--frame-pad);
+}
+
+.studio-hero__content {
+  padding-top: calc(var(--nav-h) + 2rem);
+}
+
+/* Header items laid over the hero's strip and tab. Scrolls with the page. */
+.studio-dock {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  z-index: 50;
+  padding: var(--hero-gap);
+}
+
+.studio-dock__row {
+  display: flex;
+  height: var(--nav-h);
+}
+
+.studio-dock__tab {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--tab-w);
+  margin-right: var(--frame-pad);
+  padding-top: var(--frame-pad);
+}

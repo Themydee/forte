@@ -713,7 +713,7 @@ export default function FortePage() {
 
         <section className="section section-champagne contact" id="contact" aria-labelledby="contact-title">
           <div className="section-inner">
-            <p className="section-kicker">A good place to begin</p>
+
             <h2 className="section-title" id="contact-title">
               Send Us Your Brief.
             </h2>

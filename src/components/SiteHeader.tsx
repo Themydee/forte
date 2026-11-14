@@ -1,41 +1,102 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import React, { useEffect, useState, type CSSProperties } from "react";
+import { usePathname } from "next/navigation";
+import { ArrowUpRight, X } from "lucide-react";
 
 interface SiteHeaderProps {
   activeSection?: string;
+  /**
+   * "overlay" docks into the home hero's frame (links on the dark strip, CTA
+   * in the panel's raised tab); "light" is for pages that open on the
+   * champagne canvas; "dark" is for pages that open on a dark background
+   * (light text at the top). All use the floating glass bar once scrolled.
+   */
+  variant?: "overlay" | "light" | "dark";
 }
 
-export function SiteHeader({ activeSection }: SiteHeaderProps) {
+// Section links include the path so they also work from other pages.
+const navLinks = [
+  { href: "/#about", label: "About" },
+  { href: "/#services", label: "Services" },
+  { href: "/#process", label: "Process" },
+  { href: "/#gallery", label: "Gallery" },
+  { href: "/#contact", label: "Contact" },
+];
+
+const sectionId = (href: string) => href.split("#")[1] ?? "";
+
+// On the home page, the docked nav has scrolled away by about this point.
+const DOCK_HEIGHT_PX = 120;
+
+function Wordmark({ light }: { light: boolean }) {
+  return (
+    <a
+      href="/#top"
+      className="nav-rise flex min-w-0 flex-col leading-none focus:outline-none"
+      style={{ "--nav-i": 0 } as CSSProperties}
+      aria-label="FORTÉ home"
+    >
+      <span
+        className={`text-[1.15rem] font-bold tracking-[0.22em] sm:text-[1.3rem] ${
+          light ? "text-white" : "text-plum"
+        }`}
+      >
+        FORTÉ
+      </span>
+      <span
+        className={`mt-1 hidden text-[0.55rem] font-semibold uppercase tracking-[0.2em] sm:block ${
+          light ? "text-white/60" : "text-gold-deep"
+        }`}
+      >
+        Corporate Events &amp; Experiences
+      </span>
+    </a>
+  );
+}
+
+function MenuLines() {
+  return (
+    <>
+      <span className="h-[2px] w-6 rounded-full bg-current" />
+      <span className="h-[2px] w-6 rounded-full bg-current" />
+    </>
+  );
+}
+
+export function SiteHeader({ activeSection, variant = "overlay" }: SiteHeaderProps) {
+  const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState(activeSection || '');
+  const [scrollY, setScrollY] = useState(0);
+  const [active, setActive] = useState(activeSection || "");
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      const y = window.scrollY;
+      // Only the thresholds matter, so avoid re-rendering on every pixel.
+      setScrollY(y > DOCK_HEIGHT_PX ? DOCK_HEIGHT_PX + 1 : y > 12 ? 13 : 0);
     };
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const raf = requestAnimationFrame(onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   useEffect(() => {
-    const sectionIds = ['top', 'about', 'services', 'process', 'gallery', 'contact'];
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActive(entry.target.id === 'top' ? '' : entry.target.id);
+            setActive(entry.target.id === "top" ? "" : entry.target.id);
           }
         });
       },
-      { rootMargin: '-15% 0px -65% 0px' }
+      { rootMargin: "-15% 0px -65% 0px" },
     );
 
-    sectionIds.forEach((id) => {
+    ["top", ...navLinks.map((link) => sectionId(link.href)).filter(Boolean)].forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
@@ -44,114 +105,231 @@ export function SiteHeader({ activeSection }: SiteHeaderProps) {
   }, []);
 
   useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    if (!mobileOpen) return;
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && mobileOpen) {
-        setMobileOpen(false);
-      }
+      if (e.key === "Escape") setMobileOpen(false);
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
   }, [mobileOpen]);
 
-  const navLinks = [
-    { href: '#about', label: 'About' },
-    { href: '#services', label: 'Services' },
-    { href: '#process', label: 'Process' },
-    { href: '#gallery', label: 'Gallery' },
-    { href: '#contact', label: 'Contact' },
-  ];
+  const isActive = (href: string) =>
+    href.includes("#") ? active === sectionId(href) : pathname === href;
+
+  const docked = variant === "overlay";
+  // The floating bar: always on light pages, and on the home page once the
+  // docked nav has scrolled out of view.
+  const showBar = !docked || scrollY > DOCK_HEIGHT_PX;
+  const atTop = scrollY <= 12;
+  // "dark" pages open on a dark background: light text until the glass bar forms.
+  const lightText = variant === "dark" && atTop;
+
+  const barSurface =
+    atTop && !docked
+      ? "border-transparent"
+      : "border-white/70 bg-white/60 lg:rounded-full shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_10px_30px_rgba(15,18,34,0.1)] backdrop-blur-xl backdrop-saturate-[1.8]";
+
+  const openMenuButton = (className: string) => (
+    <button
+      type="button"
+      onClick={() => setMobileOpen(true)}
+      aria-label="Open menu"
+      aria-expanded={mobileOpen}
+      aria-controls="mobile-menu"
+      className={className}
+    >
+      <MenuLines />
+    </button>
+  );
 
   return (
-    <header
-      className={`site-header fixed top-0 inset-x-0 z-50 transition-all duration-300 font-sans border-b ${
-        scrolled
-          ? 'is-scrolled bg-white/95 backdrop-blur-md border-[#380d58]/15 py-3 shadow-xs'
-          : 'bg-white/90 backdrop-blur-sm border-[#380d58]/15 py-4'
-      }`}
-    >
-      <div className="header-inner max-w-7xl mx-auto px-6 lg:px-12 flex items-center justify-between gap-6">
-        <Link href="#top" className="wordmark flex flex-col focus:outline-none group" aria-label="FORTÉ home">
-          <span className="wordmark-name text-2xl lg:text-3xl font-bold tracking-[0.22em] text-[#380d58] transition-colors duration-300">
-            FORTÉ
-          </span>
-          <span className="wordmark-tag text-[0.6rem] uppercase tracking-[0.2em] text-[#8c6a32] font-semibold -mt-0.5">
-            Corporate Events &amp; Experiences
-          </span>
-        </Link>
+    <header className="font-sans">
+      {/* Docked nav: laid over the hero frame's strip and tab, scrolls away with it. */}
+      {docked && (
+        <div className="studio-dock">
+          <div className="studio-dock__row nav-drop">
+            <div className="flex min-w-0 flex-1 items-center justify-between gap-6 pl-5 pr-3 sm:pl-7 lg:pl-9 lg:pr-9">
+              <Wordmark light />
 
-        {/* Desktop Navigation */}
-        <nav className="desktop-nav hidden md:flex items-center gap-8" aria-label="Main navigation">
-          {navLinks.map((link) => {
-            const isActive = active === link.href.replace('#', '');
-            return (
-              <a
-                key={link.href}
-                href={link.href}
-                className={`relative text-xs uppercase tracking-[0.16em] transition-colors duration-200 py-1.5 focus:outline-none ${
-                  isActive
-                    ? 'text-[#380d58] font-semibold'
-                    : 'text-[#5f526b] hover:text-[#380d58]'
-                }`}
-                aria-current={isActive ? 'location' : undefined}
+              <nav
+                className="hidden items-center gap-7 lg:flex xl:gap-9"
+                aria-label="Main navigation"
               >
-                {link.label}
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#c5a267]" />
-                )}
-              </a>
-            );
-          })}
-        </nav>
+                {navLinks.map((link, index) => {
+                  const current = isActive(link.href);
+                  return (
+                    <a
+                      key={link.href}
+                      href={link.href}
+                      style={{ "--nav-i": index + 1 } as CSSProperties}
+                      aria-current={current ? "location" : undefined}
+                      className={`nav-rise text-[0.9rem] font-medium tracking-[-0.01em] transition-colors ${
+                        current ? "text-gold" : "text-white/80 hover:text-white"
+                      }`}
+                    >
+                      {link.label}
+                    </a>
+                  );
+                })}
+              </nav>
+            </div>
 
-        {/* Primary Purple & Gold CTA */}
-        <div className="hidden sm:flex items-center gap-4">
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] font-semibold px-5 py-2.5 rounded-full bg-[#380d58] text-[#faf5ec] border border-[#c5a267]/50 hover:bg-[#4b1573] active:scale-[0.98] transition-all"
-          >
-            <span>Send Us Your Brief</span>
-            <ArrowRight size={13} className="text-[#e2cca8]" aria-hidden="true" />
-          </a>
+            <div className="studio-dock__tab">
+              <a
+                href="/contact"
+                style={{ "--nav-i": navLinks.length + 1 } as CSSProperties}
+                className="micro-button nav-rise group hidden items-center gap-3 rounded-button py-1 pl-2 text-[0.95rem] font-medium tracking-[-0.01em] text-white lg:inline-flex"
+              >
+                Send Us Your Brief
+                <span className="flex h-10 w-10 items-center justify-center rounded-button border border-white/60 transition group-hover:border-gold group-hover:bg-gold group-hover:text-night">
+                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                </span>
+              </a>
+              {openMenuButton(
+                "nav-rise flex h-11 w-11 flex-col items-center justify-center gap-[6px] rounded-button border border-white/50 text-white transition hover:bg-white/10 lg:hidden",
+              )}
+            </div>
+          </div>
         </div>
+      )}
 
-        {/* Mobile menu toggle */}
-        <button
-          type="button"
-          className="mobile-trigger md:hidden p-2 rounded border border-[#380d58]/20 text-[#380d58] hover:bg-[#faf5ec] focus:outline-none transition-colors"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-expanded={mobileOpen}
-          aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+      {/* Floating glass bar. */}
+      {showBar && (
+        <div
+          className={`fixed inset-x-0 top-0 z-50 transition-[padding] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] lg:px-3 ${
+            atTop && !docked ? "px-2 pt-2 sm:px-3 sm:pt-3" : "pt-0 lg:pt-3"
+          }`}
         >
-          {mobileOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
-        </button>
-      </div>
+          <div
+            className={`nav-drop mx-auto flex items-center justify-between gap-4 border transition-all duration-300 max-lg:border-x-0 max-lg:border-t-0 lg:grid lg:grid-cols-[1fr_auto_1fr] ${barSurface} ${
+              atTop && !docked
+                ? "max-w-none px-5 py-3 sm:px-7 lg:px-9 lg:py-5"
+                : "px-5 py-2 sm:px-6 lg:max-w-[1380px] lg:px-6 lg:py-2.5"
+            }`}
+          >
+            <Wordmark light={lightText} />
 
-      {/* Mobile Drawer */}
-      {mobileOpen && (
-        <div className="mobile-drawer fixed inset-x-0 top-[68px] bottom-0 bg-[#faf5ec] z-40 p-8 flex flex-col justify-between border-t border-[#380d58]/15 md:hidden overflow-y-auto">
-          <nav className="flex flex-col gap-5" aria-label="Mobile navigation">
-            {navLinks.map((link) => (
+            <nav
+              className="hidden items-center justify-center gap-6 lg:flex xl:gap-9"
+              aria-label={docked ? "Main navigation (floating)" : "Main navigation"}
+            >
+              {navLinks.map((link, index) => {
+                const current = isActive(link.href);
+                return (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    style={{ "--nav-i": index + 1 } as CSSProperties}
+                    aria-current={current ? "location" : undefined}
+                    className={`nav-rise text-[0.9rem] font-medium tracking-[-0.01em] transition-colors ${
+                      lightText
+                        ? current
+                          ? "text-gold"
+                          : "text-white/80 hover:text-white"
+                        : current
+                          ? "text-gold-deep"
+                          : "text-ink hover:text-gold-deep"
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                );
+              })}
+            </nav>
+
+            <div
+              className="nav-rise hidden items-center justify-end lg:flex"
+              style={{ "--nav-i": navLinks.length + 1 } as CSSProperties}
+            >
               <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="text-xl font-bold tracking-tight text-[#380d58] hover:text-[#8c6a32] transition-colors py-2.5 border-b border-[#380d58]/12 flex items-center justify-between"
+                href="/contact"
+                className={`micro-button inline-flex items-center gap-2 rounded-button px-5 py-2.5 text-[0.9rem] font-medium tracking-[-0.01em] transition ${
+                  lightText
+                    ? "bg-white text-ink hover:bg-gold-soft"
+                    : "bg-ink text-white hover:bg-plum"
+                }`}
               >
-                <span>{link.label}</span>
-                <ArrowRight size={16} className="text-[#c5a267]" />
+                Send Us Your Brief
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
               </a>
-            ))}
-          </nav>
+            </div>
 
-          <div className="pt-8 border-t border-[#380d58]/15 flex flex-col gap-4">
+            {openMenuButton(
+              `nav-rise -mr-2 flex h-10 w-10 flex-col items-center justify-center gap-[6px] lg:hidden ${
+                lightText ? "text-white" : "text-ink"
+              }`,
+            )}
+          </div>
+        </div>
+      )}
+
+      {mobileOpen && (
+        <div
+          id="mobile-menu"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Menu"
+          className="fixed inset-0 z-[60] p-2 lg:hidden"
+        >
+          <div
+            aria-hidden="true"
+            onClick={() => setMobileOpen(false)}
+            className="absolute inset-0 bg-night/30 backdrop-blur-md"
+          />
+
+          <div className="mobile-menu-panel relative flex h-full flex-col overflow-hidden rounded-[1.5rem] bg-night/95 px-6 pb-6 pt-5 text-white shadow-[0_30px_80px_rgba(0,0,0,0.35)] backdrop-blur-xl">
+            <div className="flex items-center justify-between">
+              <a
+                href="/#top"
+                onClick={() => setMobileOpen(false)}
+                className="text-[1.2rem] font-bold tracking-[0.22em]"
+              >
+                FORTÉ
+              </a>
+              <button
+                type="button"
+                onClick={() => setMobileOpen(false)}
+                aria-label="Close menu"
+                className="-mr-2 flex h-11 w-11 items-center justify-center"
+              >
+                <X className="h-7 w-7" strokeWidth={1.75} aria-hidden="true" />
+              </button>
+            </div>
+
+            <nav
+              className="mt-6 flex-1 overflow-y-auto border-t border-white/15"
+              aria-label="Mobile navigation"
+            >
+              {navLinks.map((link, index) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  style={{ "--nav-i": index } as CSSProperties}
+                  className={`nav-rise flex items-center justify-between border-b border-white/15 py-3 text-[clamp(2rem,9vw,2.6rem)] font-semibold leading-[1.1] tracking-[-0.05em] transition ${
+                    isActive(link.href) ? "text-gold" : "text-white"
+                  }`}
+                >
+                  {link.label}
+                  <ArrowUpRight className="h-6 w-6 text-gold" aria-hidden="true" />
+                </a>
+              ))}
+            </nav>
+
             <a
-              href="#contact"
+              href="/contact"
               onClick={() => setMobileOpen(false)}
-              className="w-full text-center text-xs uppercase tracking-[0.16em] font-bold py-3.5 rounded-full bg-[#380d58] text-[#faf5ec] border border-[#c5a267]/50 hover:bg-[#4b1573] transition-colors"
+              style={{ "--nav-i": navLinks.length } as CSSProperties}
+              className="nav-rise micro-button mt-6 flex items-center justify-center gap-2 rounded-button bg-white px-6 py-4 text-[1.05rem] font-medium tracking-[-0.02em] text-ink transition hover:bg-gold"
             >
               Send Us Your Brief
+              <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
             </a>
-            <p className="text-center text-xs text-[#5f526b] font-sans">
+            <p className="mt-4 text-center text-[0.82rem] text-white/60">
               forteexperiences@gmail.com
             </p>
           </div>

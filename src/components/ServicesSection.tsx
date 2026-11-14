@@ -1,94 +1,116 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
+
+const services = [
+  {
+    number: "01",
+    title: "Concept",
+    description: "Ideas shaped around your purpose and audience.",
+    image: "/images/forte-gold-ribbon.jpg",
+  },
+  {
+    number: "02",
+    title: "Production",
+    description: "Staging, sound, lighting and run-of-show, handled.",
+    image: "/images/forte-conference.jpg",
+  },
+  {
+    number: "03",
+    title: "Corporate Events",
+    description: "Conferences, dinners, launches and awards.",
+    image: "/images/forte-awards.jpg",
+  },
+  {
+    number: "04",
+    title: "Activations",
+    description: "Brand moments that people step into.",
+    image: "/images/forte-activation.jpg",
+  },
+  {
+    number: "05",
+    title: "Hospitality",
+    description: "Guest care from the first welcome to the last goodbye.",
+    image: "/images/forte-dinner.jpg",
+  },
+  {
+    number: "06",
+    title: "Logistics",
+    description: "The moving parts, sorted before guests arrive.",
+    image: "/images/forte-welcome.jpg",
+  },
+];
 
 export function ServicesSection() {
-  const services = [
-    {
-      number: '01',
-      title: 'Concept',
-      description: 'Ideas shaped around your purpose and audience.',
-    },
-    {
-      number: '02',
-      title: 'Production',
-      description: 'Staging, sound, lighting and run-of-show, handled.',
-    },
-    {
-      number: '03',
-      title: 'Corporate Events',
-      description: 'Conferences, dinners, launches and awards.',
-    },
-    {
-      number: '04',
-      title: 'Activations',
-      description: 'Brand moments that people step into.',
-    },
-    {
-      number: '05',
-      title: 'Hospitality',
-      description: 'Guest care from the first welcome to the last goodbye.',
-    },
-    {
-      number: '06',
-      title: 'Logistics',
-      description: 'The moving parts, sorted before guests arrive.',
-    },
-  ];
-
   return (
-    <section className="py-24 bg-white relative border-t border-[#380d58]/15 font-sans" id="services">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        {/* Section Header + Sculpted Gold Ribbon on Plain White Canvas */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center mb-14">
-          <div className="lg:col-span-7">
-            <div className="flex items-center gap-3 mb-3">
-              <span className="h-px w-6 bg-[#c5a267]" aria-hidden="true" />
-              <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#8c6a32]">
-                Thoughtfully delivered
+    <section
+      id="services"
+      className="bg-champagne px-4 py-16 font-sans text-ink sm:px-8 sm:py-24 lg:px-10"
+    >
+      <div className="mx-auto max-w-[1380px]">
+        <div className="flex flex-wrap items-end justify-between gap-5 border-b border-ink/12 pb-6 sm:pb-10">
+          <div>
+            <p className="text-[0.92rem] font-medium tracking-[-0.02em] text-gold-deep">
+              Thoughtfully delivered
+            </p>
+            <h2 className="mt-2 text-[clamp(2.5rem,6.4vw,6rem)] font-semibold leading-[0.95] tracking-[-0.055em]">
+              Everything behind the moment.{" "}
+              <span className="relative inline-block h-[0.78em] w-[0.78em] translate-y-[0.08em] overflow-hidden rounded-[0.16em] align-baseline">
+                <Image
+                  src="/images/forte-gala-hero.jpg"
+                  alt=""
+                  fill
+                  sizes="100px"
+                  className="object-cover"
+                />
               </span>
-            </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#380d58] tracking-tight leading-tight">
-              Everything behind the moment.
             </h2>
           </div>
-
-          <div className="lg:col-span-5 flex justify-end">
-            <div className="relative w-full max-w-sm aspect-[16/9]">
-              <Image
-                src="/images/forte-gold-ribbon.jpg"
-                alt=""
-                fill
-                sizes="(max-width: 1024px) 100vw, 384px"
-                className="object-contain [mask-image:radial-gradient(ellipse_at_center,black_55%,transparent_95%)]"
-                aria-hidden="true"
-              />
-            </div>
-          </div>
+          <a
+            href="/contact"
+            className="micro-button inline-flex items-center gap-2 rounded-button bg-white px-5 py-2.5 text-[0.9rem] font-medium tracking-[-0.01em] transition hover:bg-gold-soft"
+          >
+            Plan Your Event
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </a>
         </div>
 
-        {/* Clean Hairline Grid on Plain White Canvas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-t border-l border-[#380d58]/15 bg-white">
-          {services.map((item) => (
-            <article
-              key={item.number}
-              className="p-8 sm:p-9 border-r border-b border-[#380d58]/15 flex flex-col gap-3 hover:bg-[#faf5ec]/65 transition-colors"
+        <ul className="mt-6 grid gap-x-12 sm:mt-10 lg:grid-flow-col lg:grid-cols-2 lg:grid-rows-3">
+          {services.map((service) => (
+            <li
+              key={service.number}
+              className="service-row border-b border-ink/10 last:border-b-0 lg:[&:nth-child(3)]:border-b-0"
             >
-              <span className="text-xs font-bold text-[#8c6a32] tracking-[0.14em]">
-                {item.number}
-              </span>
-
-              <h3 className="text-xl font-bold text-[#380d58] tracking-tight">
-                {item.title}
-              </h3>
-
-              <p className="text-sm text-[#5f526b] leading-relaxed font-normal">
-                {item.description}
-              </p>
-            </article>
+              <article className="group relative my-1 flex items-center overflow-hidden rounded-[1.5rem] px-4 py-5 transition-colors duration-300 hover:text-white sm:px-6 sm:py-6">
+                <Image
+                  src={service.image}
+                  alt=""
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="hidden scale-110 object-cover opacity-0 transition duration-500 group-hover:scale-100 group-hover:opacity-100 md:block"
+                />
+                <span className="absolute inset-0 bg-night/60 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <span className="relative mr-5 w-8 shrink-0 self-start pt-2 text-[0.8rem] font-semibold tracking-[0.12em] text-gold-deep transition-colors group-hover:text-gold sm:mr-7">
+                  {service.number}
+                </span>
+                <div className="relative flex-1">
+                  <h3 className="text-[clamp(1.7rem,3.3vw,3rem)] font-semibold leading-[1.08] tracking-[-0.045em]">
+                    {service.title}
+                  </h3>
+                  <p className="mt-1.5 max-w-xl text-[clamp(0.95rem,1.2vw,1.08rem)] leading-snug tracking-[-0.015em] text-ink/60 transition-colors duration-300 group-hover:text-white/85">
+                    {service.description}
+                  </p>
+                </div>
+                <ArrowUpRight
+                  className="relative h-6 w-6 shrink-0 text-ink/30 transition-all duration-300 group-hover:rotate-45 group-hover:text-gold sm:h-8 sm:w-8"
+                  aria-hidden="true"
+                />
+              </article>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

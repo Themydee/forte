@@ -1,55 +1,96 @@
-'use client';
+"use client";
 
-import React from 'react';
-import Image from 'next/image';
+import React from "react";
+import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
+
+const formats = [
+  "Conferences",
+  "Gala Dinners",
+  "Product Launches",
+  "Awards Evenings",
+  "Brand Activations",
+  "Leadership Summits",
+];
 
 export function EthosSection() {
+  const marqueeItems = [...formats, ...formats];
+
   return (
-    <section className="py-24 bg-[#faf5ec] relative border-t border-[#380d58]/15 font-sans" id="about">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-          {/* Authentic Photography with Clean Gold Stroke */}
-          <div className="lg:col-span-5 rounded-2xl border border-[#c5a267]/60 bg-white p-2">
-            <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-[#f4ebdd]">
-              <Image
-                src="/images/forte-welcome.jpg"
-                alt="FORTÉ event hosts welcoming guests to a considered, polished experience"
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 45vw, 40vw"
-                className="object-cover"
-              />
-            </div>
+    <section
+      id="about"
+      className="bg-champagne px-4 pb-20 pt-12 font-sans text-ink sm:px-8 sm:pb-28 sm:pt-16 lg:px-10"
+    >
+      <div className="mx-auto max-w-[1380px]">
+        <div className="flex flex-col gap-5 md:flex-row md:items-center md:gap-10">
+          <p className="shrink-0 text-[0.92rem] font-medium tracking-[-0.02em]">
+            The team behind&nbsp;...
+          </p>
+          <div className="marquee relative min-w-0 flex-1 overflow-hidden">
+            <ul className="marquee__track flex w-max items-center">
+              {marqueeItems.map((format, index) => (
+                <li
+                  key={`${format}-${index}`}
+                  aria-hidden={index >= formats.length}
+                  className="flex shrink-0 items-center gap-6 px-3 text-[clamp(1.25rem,2.2vw,1.9rem)] font-semibold tracking-[-0.045em] sm:gap-8 sm:px-4"
+                >
+                  {format}
+                  <span aria-hidden="true" className="text-[0.6em] text-gold">
+                    ✦
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-16 grid gap-12 sm:mt-24 lg:grid-cols-2 lg:gap-16">
+          <div className="flex flex-col gap-6">
+            <p className="text-[0.92rem] font-medium tracking-[-0.02em] text-gold-deep">
+              A considered approach
+            </p>
+            <p className="text-[clamp(1.6rem,2.8vw,2.4rem)] font-semibold leading-[1.05] tracking-[-0.045em] text-plum">
+              Not decorate. Not merely coordinate.
+            </p>
+            <p className="max-w-[32rem] text-[clamp(1.2rem,1.9vw,1.65rem)] font-medium leading-[1.2] tracking-[-0.03em]">
+              FORTÉ turns an organisation’s brief into a polished, purposeful and memorable
+              experience.
+            </p>
+            <p className="max-w-[30rem] text-[1rem] leading-relaxed text-ink/65">
+              The work starts with understanding why people are being brought together, then shaping
+              the concept, production, guest journey and event-day delivery around that purpose.
+            </p>
           </div>
 
-          {/* Minimalist Statement on Warm Champagne Canvas */}
-          <div className="lg:col-span-7 flex flex-col gap-5">
-            <div>
-              <div className="flex items-center gap-3 mb-3">
-                <span className="h-px w-6 bg-[#c5a267]" aria-hidden="true" />
-                <span className="text-xs uppercase tracking-[0.2em] font-semibold text-[#8c6a32]">
-                  A considered approach
-                </span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#380d58] tracking-tight leading-tight">
-                Corporate experiences with purpose.
-              </h2>
-            </div>
+          <div>
+            <h2 className="text-[clamp(2.4rem,5.2vw,4.75rem)] font-semibold leading-[0.98] tracking-[-0.05em]">
+              Corporate experiences with purpose.{" "}
+              <span className="relative inline-block h-[0.8em] w-[0.8em] translate-y-[0.1em] overflow-hidden rounded-[0.16em] align-baseline">
+                <Image
+                  src="/images/forte-welcome.jpg"
+                  alt=""
+                  fill
+                  sizes="80px"
+                  className="object-cover"
+                />
+              </span>
+            </h2>
 
-            {/* Clean-Stroke White Callout Box */}
-            <div className="rounded-2xl border border-[#c5a267] bg-white px-7 py-6">
-              <p className="text-lg sm:text-xl font-bold text-[#380d58] leading-snug tracking-tight">
-                FORTÉ turns an organisation’s brief into a polished, purposeful and memorable experience.
-              </p>
-            </div>
-
-            <p className="text-[#5f526b] text-base leading-relaxed font-normal max-w-xl">
-              We start by understanding why your people gather, then shape the concept, production and guest journey around that purpose.
-            </p>
-
-            <div className="pt-5 border-t border-[#380d58]/15">
-              <p className="text-xs uppercase tracking-[0.24em] text-[#8c6a32] font-semibold">
-                Concept · Production · Experience
-              </p>
+            <div className="mt-8 flex flex-wrap items-center gap-3 sm:mt-10">
+              <a
+                href="#services"
+                className="micro-button inline-flex items-center gap-2 rounded-button bg-white px-6 py-3 text-[0.92rem] font-medium tracking-[-0.01em] transition hover:bg-gold-soft"
+              >
+                Our Services
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </a>
+              <a
+                href="#process"
+                className="micro-button inline-flex items-center gap-2 rounded-button px-4 py-3 text-[0.92rem] font-medium tracking-[-0.01em] transition hover:text-gold-deep"
+              >
+                How We Work
+                <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+              </a>
             </div>
           </div>
         </div>
